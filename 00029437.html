@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作品集</title>
+    <!-- 苹果官方字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 苹果风格页面基础 */
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1d1d1f;
+        }
+
+        /* 核心：苹果式淡入淡出动画 */
+        .text-container {
+            text-align: center;
+            font-size: clamp(28px, 5vw, 60px);
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            opacity: 0;
+            transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+    </style>
+</head>
+<body>
+    <div class="text-container" id="text"></div>
+
+    <script>
+        const textEl = document.getElementById('text');
+        let currentText = "";
+
+        // 苹果风格：淡入 → 等待 → 淡出 → 切换文字 → 淡入
+        async function changeText(newText, delay) {
+            await new Promise(resolve => setTimeout(resolve, delay));
+            
+            // 淡出
+            textEl.style.opacity = 0;
+            await new Promise(resolve => setTimeout(resolve, 800));
+            
+            // 切换文字
+            textEl.textContent = newText;
+            
+            // 淡入
+            textEl.style.opacity = 1;
+        }
+
+        // 执行流程
+        window.onload = async () => {
+            // 1. 立即显示：你好
+            textEl.textContent = "你好";
+            textEl.style.opacity = 1;
+
+            // 2. 等待2秒 → 切换
+            await changeText("这是我的作品集网站", 2000);
+
+            // 3. 再等待3秒 → 切换
+            await changeText("但是对不起，我其实还没做完", 3000);
+        };
+    </script>
+</body>
+</html>
